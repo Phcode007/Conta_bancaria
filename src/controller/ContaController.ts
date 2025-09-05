@@ -44,7 +44,8 @@ export class ContaController implements ContaRepository {
     public atualizar(conta: Conta): void {
         let buscaConta = this.buscaNoArray(conta.numero);
         if (buscaConta != null){
-            
+              buscaConta.numero = conta.numero;
+              console.log(colors.fg.green, "\nConta numero: " + conta.numero + "foi atualizada com sucesso!", colors.reset);            
         }
     }
     public deletar(numero: number): void {
