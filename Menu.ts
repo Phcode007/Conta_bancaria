@@ -25,7 +25,7 @@ contas.cadastrar(cp2);
 
 contas.listarTodas();
     
-    let opcao, numero, agencia, tipo, saldo, limite, aniversario: number;
+    let opcao, numero, agencia, tipo, saldo, limite, aniversario, valor,numeroDestino: number;
     let titular: string;
     const tiposContas = ['Corrente', 'Poupança'];
 
@@ -109,25 +109,72 @@ contas.listarTodas();
             case 4:
                 console.log(colors.fg.whitestrong, "\n\nAtualizar dados da Conta\n\n", colors.reset);
 
+                console.log("Digite o número da conta: ");
+                numero = readlinesync.questionInt("");
+                let conta = contas.buscaNoArray(numero);
+                if (conta != null){
+                    console.log("Digite o numero da agencia: ");
+                    agencia = readlinesync.questionInt("");
+                    console.log("Digite o nome do titular da conta: ");
+                    titular = readlinesync.question("");
+                    console.log("\nDigite o tipo da conta: ");
+                    tipo = readlinesync.keyInSelect(tiposContas, "", { cancel: false }) + 1;
+                    console.log("Digite o saldo da conta (R$): ");
+                    saldo = readlinesync.questionFloat("");
+                } else {
+                    console.log(colors.fg.red, "\nConta número: " + numero + " não encontrada!", colors.reset);
+                }
+
                 keyPress()
                 break;
             case 5:
                 console.log(colors.fg.whitestrong, "\n\nApagar uma Conta\n\n", colors.reset);
 
+                console.log("Digite o número da conta: ");
+                numero = readlinesync.questionInt("");
+                contas.deletar(numero);
+
                 keyPress()
                 break;
             case 6:
                 console.log(colors.fg.whitestrong, "\n\nSaque\n\n", colors.reset);
+                
+                console.log("Digite o número da conta: ");
+                numero = readlinesync.questionInt("");
+
+                console.log("Digite o valor do saque (R$): ");
+                valor = readlinesync.questionFloat("");
+
+                contas.sacar(numero, valor);
 
                 keyPress()
                 break;
             case 7:
                 console.log(colors.fg.whitestrong, "\n\nDepósito\n\n", colors.reset);
+                
+                console.log("Digite o número da conta: ");
+                numero = readlinesync.questionInt("");
+
+                console.log("Digite o valor do depósito (R$): ");
+                valor = readlinesync.questionFloat("");
+
+                contas.depositar(numero, valor);
 
                 keyPress()
                 break;
             case 8:
                 console.log(colors.fg.whitestrong, "\n\nTransferência entre Contas\n\n", colors.reset);
+                
+                console.log("Digite o número da conta de origem: ");
+                numero = readlinesync.questionInt("");
+
+                console.log("Digite o número da conta de destino: ");
+                numeroDestino = readlinesync.questionInt("");
+
+                console.log("Digite o valor da transferência (R$): ");
+                valor = readlinesync.questionFloat("");
+
+                contas.transferir(numero, numeroDestino, valor);
 
                 keyPress()
                 break;
